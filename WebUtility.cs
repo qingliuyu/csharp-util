@@ -17,10 +17,8 @@ namespace Common
         /// <returns>返回整形值，如页码，ID等</returns>
         public static int GetParamValue(string paramName, int defaultValue)
         {
-            HttpRequest request = HttpContext.Current.Request;
-            string method = request.HttpMethod.ToLower();
             int ret = defaultValue;
-            string value = method.Equals("get") ? request.QueryString[paramName] : request[paramName];
+            string value = HttpContext.Current.Request[paramName];
             if (!string.IsNullOrEmpty(value))
             {
                 ret = int.Parse(value);
@@ -36,12 +34,8 @@ namespace Common
         /// <returns></returns>
         public static string GetParamValue(string paramName, string defaultValue)
         {
-            HttpRequest request = HttpContext.Current.Request;
-            string method = request.HttpMethod.ToLower();
             string ret = defaultValue;
-            // method = "get"，数据保存在Http请求头中
-            // mehtod = "post"，数据保存在Http请求体中
-            string value = method.Equals("get") ? request.QueryString[paramName] : request[paramName];
+            string value = HttpContext.Current.Request[paramName];
             if (!string.IsNullOrEmpty(value))
             {
                 ret = value;
